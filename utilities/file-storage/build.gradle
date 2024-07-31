@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "${spring_boot_version}"
+    id 'io.spring.dependency-management' version "${spring_dependency_version}"
+    id 'java'
+}
+
+apply plugin: 'io.spring.javaformat'
+
+group "${project_group}"
+version "${project_version}"
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+
+    implementation "org.apache.commons:commons-lang3:${apache_commons_lang3_version}"
+    implementation "org.apache.commons:commons-collections4:${apache_commons_collection_version}"
+    implementation "commons-io:commons-io:${commons_io_version}"
+
+    implementation "com.amazonaws:aws-java-sdk-s3:${aws_sdk_version}"
+
+    implementation ("org.springframework.cloud:spring-cloud-starter-alicloud-oss:${alicloud_oss_version}"){
+        exclude group: "com.sun.xml.bind"
+    }
+
+}
+
+task fatJar(type: Jar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

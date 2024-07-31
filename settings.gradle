@@ -1,0 +1,18 @@
+rootProject.name = 'web-app'
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+include 'components:eureka-server'
+include 'components:api-gateway'
+
+include 'utilities:feign-client'
+include 'utilities:general'
+include 'utilities:ciphers'
+include 'utilities:file-storage'
+include 'utilities:core'
+
+include 'components:common'

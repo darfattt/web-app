@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "${spring_boot_version}"
+    id 'io.spring.dependency-management' version "${spring_dependency_version}"
+    id 'java'
+}
+
+apply plugin: 'io.spring.javaformat'
+
+group "${project_group}"
+version "${project_version}"
+
+sourceCompatibility="${java_compatibility_version}"
+targetCompatibility="${java_compatibility_version}"
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
+
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+}

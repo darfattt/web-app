@@ -1,0 +1,16 @@
+version: '3.8'
+name: web-app-apps
+services:
+  web-app-eureka-server:
+    image: web-app/eureka-server
+    ports:
+      - "8761:8761"
+
+  web-app-api-gateway:
+    image: web-app/api-gateway
+    environment:
+      JAVA_TOOL_OPTIONS: "-Deureka.client.serviceUrl.defaultZone=http://web-app-eureka-server:8761/eureka"
+    depends_on:
+      - web-app-eureka-server
+    ports:
+      - "8762:8762"

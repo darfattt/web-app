@@ -1,0 +1,29 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+version: '3.8'
+name: redis-sentinel
+services:
+  projecth-redis-master:
+    image: redis
+
+  projecth-redis-slave:
+    image: redis
+    command:
+      - 'redis-server'
+      - '--slaveof projecth-redis-master 6379'
+
+  projecth-redis-slave-1:
+    image: redis
+    command:
+      - 'redis-server'
+      - '--slaveof projecth-redis-master 6379'
+
+  projecth-redis-sentinel:
+    depends_on:
+      - projecth-redis-master
+      - projecth-redis-slave
+      - projecth-redis-slave-1
+    build:
+      context: .
+      dockerfile: redis/Redis-Sentinel.Dockerfile
+    ports:
+      - '26379-26381:26379'

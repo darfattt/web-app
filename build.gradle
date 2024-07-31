@@ -1,0 +1,10 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
+	}
+}
+
+apply plugin: 'io.spring.javaformat'

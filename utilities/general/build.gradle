@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "${spring_boot_version}"
+    id 'io.spring.dependency-management' version "${spring_dependency_version}"
+    id 'java'
+}
+
+apply plugin: 'io.spring.javaformat'
+
+group "${project_group}"
+version "${project_version}"
+
+sourceCompatibility = "${java_compatibility_version}"
+targetCompatibility = "${java_compatibility_version}"
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+
+    implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${spring_cloud_version}"
+
+    implementation "joda-time:joda-time:${joda}"
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+
+    implementation "org.apache.commons:commons-lang3:${apache_commons_lang3_version}"
+    implementation "com.googlecode.libphonenumber:libphonenumber:${google_libphonenumber}"
+
+    implementation "com.amazonaws:aws-java-sdk-sqs:${aws_sdk_version}"
+    implementation "com.amazonaws:aws-java-sdk-secretsmanager:${aws_sdk_version}"
+
+}

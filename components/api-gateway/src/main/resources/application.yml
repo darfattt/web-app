@@ -1,0 +1,79 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: account-component
+          uri: lb://account-component
+          predicates:
+            - Path=/account-component/**
+          filters:
+            - RewritePath=/account-component(?<segment>/?.*), $\{segment}
+        - id: notification-component
+          uri: lb://notification-component
+          predicates:
+            - Path=/notification-component/**
+          filters:
+            - RewritePath=/notification-component(?<segment>/?.*), $\{segment}
+        - id: common-component
+          uri: lb://common-component
+          predicates:
+            - Path=/common-component/**
+          filters:
+            - RewritePath=/common-component(?<segment>/?.*), $\{segment}
+#        - id: service-template-component
+#          uri: lb://SERVICE-TEMPLATE-COMPONENT
+#          predicates:
+#            - Path=/service-template-component/**
+#          filters:
+#            - RewritePath=/service-template-component(?<segment>/?.*), $\{segment}
+        - id: swagger
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs(?<segment>/?.*), $\{segment}/v3/api-docs
+        - id: esg-component
+          uri: lb://esg-component
+          predicates:
+            - Path=/esg-component/**
+          filters:
+            - RewritePath=/esg-component(?<segment>/?.*), $\{segment}
+        - id: scheduler-component
+          uri: lb://scheduler-component
+          predicates:
+            - Path=/scheduler-component/**
+          filters:
+            - RewritePath=/scheduler-component(?<segment>/?.*), $\{segment}
+        - id: sports-component
+          uri: lb://sports-component
+          predicates:
+            - Path=/sports-component/**
+          filters:
+            - RewritePath=/sports-component(?<segment>/?.*), $\{segment}
+        - id: finance-component
+          uri: lb://finance-component
+          predicates:
+            - Path=/finance-component/**
+          filters:
+            - RewritePath=/finance-component(?<segment>/?.*), $\{segment}
+
+server:
+  port: 8762
+
+##https://cloud.spring.io/spring-cloud-netflix/reference/html/appendix.html
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+springdoc:
+  version: '@springdoc.version@'
+  swagger-ui:
+    use-root-path: true
+    tagsSorter: alpha
+    persistAuthorization: true

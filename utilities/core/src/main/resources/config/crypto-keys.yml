@@ -1,0 +1,9 @@
+crypto:
+  protected:
+    key: EnR/Bs1qkj/QT6QkH1Eqf9rBXY0r6smYSDWU3fviizw=
+  ephemeral:
+    key: 8sbEKBzEREtPKhGEWKw+iuUJS+zXsq1EM4WfZokRGjQ=
+  secret:
+    key: 7p8232F9UDxoMn+CbeMg/a1CWK3rzF6yv3zd653WNRo=
+  confidential:
+    key: NqhZ1t+GDdtaDXni2BNcDwRYIJ/T4mwcSvOvZsE6H/I=

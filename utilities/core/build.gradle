@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "${spring_boot_version}"
+    id 'io.spring.dependency-management' version "${spring_dependency_version}"
+    id 'java'
+    id 'java-test-fixtures'
+}
+
+apply plugin: 'io.spring.javaformat'
+
+group "${project_group}"
+version "${project_version}"
+
+sourceCompatibility = "${java_compatibility_version}"
+targetCompatibility = "${java_compatibility_version}"
+
+dependencies {
+    implementation project(':utilities:general')
+    implementation project(':utilities:feign-client')
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:${springdoc_version}"
+
+
+    implementation "org.mariadb.jdbc:mariadb-java-client:${mariadb_version}"
+    implementation "org.postgresql:postgresql:${postgresql_version}"
+    implementation "net.lbruun.springboot:preliquibase-spring-boot-starter:${preliquibase_version}"
+
+    implementation "io.jsonwebtoken:jjwt-api:${jjwt_version}"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwt_version}"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jjwt_version}"
+
+    implementation "org.apache.commons:commons-lang3:${apache_commons_lang3_version}"
+    implementation "org.javers:javers-spring:${javers_version}"
+
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+
+    implementation "eu.bitwalker:UserAgentUtils:${user_agent_utils_version}"
+    implementation "com.maxmind.geoip2:geoip2:${geoip_version}"
+
+    testFixturesImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testFixturesImplementation 'org.springframework.security:spring-security-test'
+    testFixturesImplementation "org.testcontainers:elasticsearch:${test_containers_version}"
+    testFixturesImplementation "org.testcontainers:junit-jupiter:${test_containers_version}"
+    testFixturesImplementation "org.testcontainers:postgresql:${test_containers_version}"
+    testFixturesImplementation "org.testcontainers:kafka:${test_containers_version}"
+    testFixturesImplementation "org.hamcrest:hamcrest-all:${hamcrest_version}"
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombok_version}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
+}

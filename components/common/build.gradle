@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "${spring_boot_version}"
+    id 'io.spring.dependency-management' version "${spring_dependency_version}"
+    id 'java'
+}
+
+apply plugin: 'io.spring.javaformat'
+
+group "${project_group}"
+version "${project_version}"
+
+sourceCompatibility = "${java_compatibility_version}"
+targetCompatibility = "${java_compatibility_version}"
+
+dependencies {
+    implementation project(':utilities:general')
+    implementation project(':utilities:feign-client')
+    implementation project(':utilities:file-storage')
+
+    implementation project(':utilities:core')
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-websocket"
+
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${spring_cloud_version}"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${spring_cloud_version}"
+
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+
+    implementation "org.mapstruct:mapstruct:${mapstruct_version}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+
+    implementation "org.liquibase:liquibase-core:${liquibase_version}"
+
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:${springdoc_version}"
+
+    implementation "org.apache.commons:commons-lang3:${apache_commons_lang3_version}"
+    implementation "org.apache.commons:commons-collections4:${apache_commons_collection_version}"
+    implementation "org.apache.commons:commons-csv:${apache_commons_csv_version}"
+
+    implementation "io.micrometer:micrometer-registry-prometheus:${micrometer_version}"
+}
+
+processResources {
+    filesMatching('**/application.yml') {
+        filter {
+            it.replace('#project.version#', version)
+        }
+    }
+}
+
+compileJava.dependsOn processResources
